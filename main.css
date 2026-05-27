@@ -1,0 +1,58 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    user-select: none;
+}
+
+
+#schachbrett {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    width: auto;
+    height: auto;
+    border: 3px solid black;
+    justify-self: center;
+}
+
+.square {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.square.white {
+    background-color: #ffffff;
+}
+
+.square.black {
+    background-color: #000000a6;
+}
+
+.square.selectedSquare {
+    background-color: rgba(132, 230, 4, 0.205);
+}
+
+.char {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 5;
+
+}
+
+.char.selectedChar {
+    z-index: 6;
+    pointer-events: none;
+}
+
+.schatten {
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.validSpot {
+    background-color: rgba(132, 230, 4, 0.205);
+    border: 10px solid rgba(132, 230, 4, 0.205);
+}
