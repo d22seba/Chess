@@ -19,7 +19,6 @@ export function startdragFunctions() {
 
 function mousedownAction(e) {
     let object = e.target
-    console.log(object)
     if (!object.closest("img") || object.dataset.color == "black") {
         e.preventDefault()
         return;
@@ -36,7 +35,7 @@ function mousedownAction(e) {
 
     let charinfo = char.dataset
     let positioninfo = startpos.dataset
-    let validmoves = getValidMoves(charinfo.type, parseInt(positioninfo.row), parseInt(positioninfo.col));
+    let validmoves = getValidMoves(charinfo, parseInt(positioninfo.row), parseInt(positioninfo.col));
     console.log("moves" + validmoves)
     markValidSpots(validmoves);
 
@@ -72,6 +71,7 @@ function mousemoveAction(e) {
 function mouseupAction(e) {
     if (!char) return
     let target = document.elementFromPoint(e.clientX, e.clientY)?.closest(".square");
+    target.appendChild = char
 
     char.classList.remove("selectedChar")
     char.style.transform = "";

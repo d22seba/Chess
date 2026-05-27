@@ -1,6 +1,7 @@
 import { gameState } from "./status.js";
 
 function placePiece(piece) {
+    console.log(piece)
     const layout = gameState.boardLayout
     const square = layout[piece.row][piece.col];
 
@@ -11,8 +12,8 @@ function placePiece(piece) {
     img.dataset.pieceId = piece.id;
     img.dataset.color = piece.color;
     img.dataset.type = piece.type;
+    img.dataset.moved = piece.moved;
     square.appendChild(img);
-    console.log(img.src)
 }
 
 export function placeAllPieces(pieces) {

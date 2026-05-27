@@ -2,43 +2,70 @@ import { gameState } from "./status.js";
 
 export function getValidMoves(char, row, col) {
 
+
+    let chartype = char.type
+
     const layout = gameState.boardLayout;
 
-    const conf = ABILITIES[char]
+    const conf = ABILITIES[chartype]
     let moves = []
 
     const dirs = conf.dirs
     const sliding = conf.sliding
-    if (char == "pawn") {
-        return
+    if (chartype == "pawn") {
+
+        const pawnMoves = conf.moves
+
+        pawnMoves.forEach(element => {
+            const [dr, dc] = element.dir
+            console.log(element.dir)
+            console.log("row = " + row + "dr = " + dr)
+            let newRow = row + dr
+            let newCol = col + dc
+            console.log(newRow)
+
+
+            if (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && gameState.pawnMoveorKill(char, row, col, newRow, newCol, "white")) {
+
+                moves.push([newRow, newCol])
+                console.log(newRow, newCol)
+
+            }
+        })
+
+
+        return moves
+
+
+    } else {
+
+
+        dirs.forEach(element => {
+            const [dr, dc] = element
+            let newRow = row + dr
+            let newCol = col + dc
+            if (sliding) {
+
+                while (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white")) {
+
+                    moves.push([newRow, newCol])
+                    newRow += dr
+                    newCol += dc
+                }
+
+            } else {
+
+
+                if (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white")) {
+
+                    moves.push([newRow, newCol])
+
+                }
+            }
+        });
+        return moves
     }
-    dirs.forEach(element => {
-        const [dr, dc] = element
-        let newRow = row + dr
-        let newCol = col + dc
-        if (sliding) {
 
-            while (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white")) {
-
-                moves.push([newRow, newCol])
-                console.log(moves)
-                newRow += dr
-                newCol += dc
-            }
-
-        } else {
-
-
-            if (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white")) {
-
-                moves.push([newRow, newCol])
-                console.log(moves)
-
-            }
-        }
-    });
-
-    return moves
 
 }
 

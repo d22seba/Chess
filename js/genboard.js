@@ -33,7 +33,6 @@ export function generatePiece(id, type, color, row, col) {
         row,
         col,
         moved: false,
-        alive: true,
         img: `/assets/${color}-${type}.png`
     };
 }
