@@ -8,7 +8,6 @@ export function generateBoard() {
         const square = document.createElement("div");
         square.draggable = false;
         square.classList.add("square");
-        console.log(i);
 
         const row = 7 - (Math.floor(i / 8));
         const col = i % 8;

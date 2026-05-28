@@ -18,17 +18,15 @@ export function getValidMoves(char, row, col) {
 
         pawnMoves.forEach(element => {
             const [dr, dc] = element.dir
-            console.log(element.dir)
-            console.log("row = " + row + "dr = " + dr)
-            let newRow = row + dr
+            let minusOrplus = (gameState.currentTurn === "white") ? 1 : -1;
+            let newRow = row + (dr * minusOrplus)
             let newCol = col + dc
-            console.log(newRow)
+            console.log(newRow, newCol)
 
 
-            if (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && gameState.pawnMoveorKill(char, row, col, newRow, newCol, "white")) {
+            if (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && gameState.pawnMoveorKill(char, row, col, newRow, newCol, gameState.currentTurn)) {
 
                 moves.push([newRow, newCol])
-                console.log(newRow, newCol)
 
             }
         })
@@ -47,9 +45,9 @@ export function getValidMoves(char, row, col) {
             if (sliding) {
 
                 let wasEnemy = false
-                while (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white") && !wasEnemy) {
+                while (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, gameState.currentTurn) && !wasEnemy) {
 
-                    if (gameState.wasthereEnemy(newRow, newCol, "white")) {
+                    if (gameState.wasthereEnemy(newRow, newCol, gameState.currentTurn)) {
                         wasEnemy = true
                     }
                     moves.push([newRow, newCol])
@@ -60,7 +58,7 @@ export function getValidMoves(char, row, col) {
             } else {
 
 
-                if (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white")) {
+                if (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, gameState.currentTurn)) {
 
                     moves.push([newRow, newCol])
 

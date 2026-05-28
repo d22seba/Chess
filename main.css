@@ -1,60 +1,64 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100dvh;
-    user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+  user-select: none;
+  gap: 20px;
 }
 
-
 #schachbrett {
-    display: grid;
-    grid-template-columns: repeat(8, 12.5%);
-    grid-template-rows: repeat(8, 12.5%);
-    width: min(90vmin, 90vw);
-    aspect-ratio: 1 / 1;
-    border: 3px solid black;
-    justify-self: center;
-    touch-action: none;
+  display: grid;
+  grid-template-columns: repeat(8, 12.5%);
+  grid-template-rows: repeat(8, 12.5%);
+  width: min(75vmin, 75vw);
+  aspect-ratio: 1 / 1;
+  border: 3px solid black;
+  justify-self: center;
+  touch-action: none;
 }
 
 .square {
-    width: 100%;
-    height: 100%;
-    position: relative;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .square.white {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .square.black {
-    background-color: #000000a6;
+  background-color: #000000a6;
 }
 
 .square.selectedSquare {
-    background-color: rgba(132, 230, 4, 0.205);
+  background-color: rgba(132, 230, 4, 0.205);
+}
+
+.square.lastMoveSquare {
+  background-color: rgba(132, 230, 4, 0.205);
 }
 
 .char {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 5;
-    touch-action: none;
-
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 5;
+  touch-action: none;
 }
 
 .char.selectedChar {
-    z-index: 6;
-    pointer-events: none;
+  z-index: 6;
+  pointer-events: none;
 }
 
 .schatten {
-    opacity: 0.5;
-    z-index: 0;
+  opacity: 0.5;
+  z-index: 0;
 }
 
 .validSpot {
-    box-shadow: inset 0 0 0 3px rgba(179, 129, 12, 0.5);
+  box-shadow: inset 0 0 0 3px rgba(179, 129, 12, 0.5);
 }

@@ -46,7 +46,7 @@ function drawGame() {
     ];
 
     inBoard.placeAllPieces(pieces)
-
+    gameState.checkforPieces()
 }
 
 function startGame() {

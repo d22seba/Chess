@@ -19,14 +19,14 @@ export function startdragFunctions() {
 
 function pointerdownAction(e) {
     let object = e.target
-    if (!object.closest("img") || object.dataset.color == "black") {
+    if (!object.closest("img") || object.dataset.color !== gameState.currentTurn) {
         e.preventDefault()
         return;
     }
 
     if (lastSquare) {
 
-        lastSquare.classList.remove("selectedSquare");
+        removeSelectedSquare()
         removeValidSpots()
     }
 
@@ -88,27 +88,29 @@ function pointerupAction(e) {
     document.removeEventListener("pointerup", pointerupAction);
 
 
-    lastSquare = target;
     char = null
     startpos = null
 
 }
 
-function movedChar(newpos, lastpos, char){
+function movedChar(newpos, lastpos, char) {
     newpos.innerHTML = ""
     newpos.appendChild(char)
     char.dataset.moved = "true"
-    
-    newpos.classList.add("selectedSquare")
+
+    lastSquare = lastpos;
+
+    removelastMoveSquare()
+    newpos.classList.add("lastMoveSquare")
+    lastpos.classList.add("lastMoveSquare")
     lastpos.classList.remove("selectedSquare")
-        
+
     lastpos.innerHTML = ""
 
     removeValidSpots()
+    gameState.switchTurn()
 
-    let positioninfo = newpos.dataset
-    let validmoves = getValidMoves(char.dataset, parseInt(positioninfo.row), parseInt(positioninfo.col));
-    markValidSpots(validmoves)
+    gameState.checkforPieces()
 
 
 }
@@ -134,3 +136,26 @@ function removeValidSpots() {
         })
     })
 }
+function removeSelectedSquare() {
+    const layout = gameState.boardLayout
+
+    layout.forEach(element => {
+        element.forEach(r => {
+            if (r) r.classList.remove("selectedSquare")
+        })
+    })
+}
+
+function removelastMoveSquare() {
+    const layout = gameState.boardLayout
+
+    layout.forEach(element => {
+        element.forEach(r => {
+            if (r) r.classList.remove("lastMoveSquare")
+        })
+    })
+
+}
+
+
+

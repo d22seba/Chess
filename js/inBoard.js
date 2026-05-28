@@ -1,7 +1,6 @@
 import { gameState } from "./status.js";
 
 function placePiece(piece) {
-    console.log(piece)
     const layout = gameState.boardLayout
     const square = layout[piece.row][piece.col];
 
