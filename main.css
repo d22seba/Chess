@@ -2,7 +2,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100dvh;
     user-select: none;
 }
 
@@ -15,6 +15,7 @@ body {
     aspect-ratio: 1 / 1;
     border: 3px solid black;
     justify-self: center;
+    touch-action: none;
 }
 
 .square {
@@ -40,6 +41,7 @@ body {
     height: 100%;
     position: absolute;
     z-index: 5;
+    touch-action: none;
 
 }
 

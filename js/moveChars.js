@@ -13,11 +13,11 @@ let offsetY = 0;
 
 export function startdragFunctions() {
 
-    chessboard.addEventListener("mousedown", mousedownAction)
+    chessboard.addEventListener("pointerdown", pointerdownAction)
 
 }
 
-function mousedownAction(e) {
+function pointerdownAction(e) {
     let object = e.target
     if (!object.closest("img") || object.dataset.color == "black") {
         e.preventDefault()
@@ -50,16 +50,20 @@ function mousedownAction(e) {
     offsetX = e.clientX
     offsetY = e.clientY
 
+    if (e.pointerType === "touch" || e.pointerType === "pen") {
+        chessboard.setPointerCapture(e.pointerId)
+    }
 
-    document.addEventListener("mousemove", mousemoveAction);
 
-    document.addEventListener("mouseup", mouseupAction)
+    document.addEventListener("pointermove", pointermoveAction);
+
+    document.addEventListener("pointerup", pointerupAction)
 
     console.log(char)
     console.log(startpos)
 }
 
-function mousemoveAction(e) {
+function pointermoveAction(e) {
     if (!char) return;
 
     let x = e.clientX - offsetX
@@ -68,7 +72,7 @@ function mousemoveAction(e) {
     char.style.transform = `translate(${x}px, ${y}px)`;
 }
 
-function mouseupAction(e) {
+function pointerupAction(e) {
     if (!char) return
     let target = document.elementFromPoint(e.clientX, e.clientY)?.closest(".square");
     if (target && target.classList.contains("validSpot")) {
@@ -79,6 +83,9 @@ function mouseupAction(e) {
 
     if (schatten && schatten.parentNode) schatten.parentNode.removeChild(schatten);
     schatten = null;
+
+    document.removeEventListener("pointermove", pointermoveAction);
+    document.removeEventListener("pointerup", pointerupAction);
 
 
     lastSquare = target;
