@@ -46,13 +46,17 @@ export function getValidMoves(char, row, col) {
             let newCol = col + dc
             if (sliding) {
 
-                while (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white")) {
+                let wasEnemy = false
+                while (newRow <= 7 && newRow >= 0 && newCol >= 0 && newCol <= 7 && !gameState.besetzt(newRow, newCol, "white") && !wasEnemy) {
 
+                    if (gameState.wasthereEnemy(newRow, newCol, "white")) {
+                        wasEnemy = true
+                    }
                     moves.push([newRow, newCol])
                     newRow += dr
                     newCol += dc
                 }
-
+                wasEnemy = false
             } else {
 
 

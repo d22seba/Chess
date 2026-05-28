@@ -7,7 +7,7 @@ const chessboard = document.getElementById("schachbrett");
 let startpos = null;
 let char = null;
 let schatten = null;
-let lastchar = null;
+let lastSquare = null;
 let offsetX = 0;
 let offsetY = 0;
 
@@ -24,9 +24,9 @@ function mousedownAction(e) {
         return;
     }
 
-    if (lastchar) {
+    if (lastSquare) {
 
-        lastchar.classList.remove("selectedSquare");
+        lastSquare.classList.remove("selectedSquare");
         removeValidSpots()
     }
 
@@ -71,8 +71,9 @@ function mousemoveAction(e) {
 function mouseupAction(e) {
     if (!char) return
     let target = document.elementFromPoint(e.clientX, e.clientY)?.closest(".square");
-    target.appendChild = char
-
+    if (target && target.classList.contains("validSpot")) {
+        movedChar(target, startpos, char)
+    }
     char.classList.remove("selectedChar")
     char.style.transform = "";
 
@@ -80,15 +81,30 @@ function mouseupAction(e) {
     schatten = null;
 
 
-    console.log(target)
-    console.log(char)
-
-    lastchar = startpos;
+    lastSquare = target;
     char = null
     startpos = null
 
 }
 
+function movedChar(newpos, lastpos, char){
+    newpos.innerHTML = ""
+    newpos.appendChild(char)
+    char.dataset.moved = "true"
+    
+    newpos.classList.add("selectedSquare")
+    lastpos.classList.remove("selectedSquare")
+        
+    lastpos.innerHTML = ""
+
+    removeValidSpots()
+
+    let positioninfo = newpos.dataset
+    let validmoves = getValidMoves(char.dataset, parseInt(positioninfo.row), parseInt(positioninfo.col));
+    markValidSpots(validmoves)
+
+
+}
 
 
 function markValidSpots(moves) {
